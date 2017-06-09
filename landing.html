@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./CustomStyles.css" rel="stylesheet">
+
+
+  </head>
+  <body>
+    <div class="container">
+        <div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder">
+                  <img src="https://cdn3.iconfinder.com/data/icons/happily-colored-snlogo/512/facebook.png" width="200" height="200" class="img-responsive" alt="FB feed">
+                  <h4 class="text">FB feed</h4>
+                  <span class="text-muted">Link to the FB landing page</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                  <h4>Label</h4>
+                  <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                  <h4>Label</h4>
+                  <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                  <img src="./on_color_large.png" width="200" height="200" class="img-responsive" alt="Reddit">
+                  <h4>Label</h4>
+                  <span class="text-muted">Something else</span>
+                </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <h1 class="text"><span id="clock"></span></h1>
+        </div>
+      <span id="clock"></span>
+<script>
+        (function () {
+
+          var clockElement = document.getElementById( "clock" );
+
+          function updateClock ( clock ) {
+            clock.innerHTML = new Date().toLocaleTimeString();
+          }
+
+          setInterval(function () {
+              updateClock( clockElement );
+          }, 1000);
+
+        }());
+</script>
+
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
