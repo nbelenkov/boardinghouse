@@ -1,14 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <<?php  
 
+include_once 'connecting.php';
 
+function sec_session_start() { //creates a secure session, which will be called at the top of every page
+    $session_name = "sec_session_id";
+    $secure = SECURE;
 
+    $httponly = true;
+
+    if (ini_set("session.use_only_cookies", 1) == FALSE) {
+        header("Location: ../error.php?err=Could not initiate a safe session (ini_set)");
+        exit();
+    }
+
+    $cookieParams = session_get_cookie_params():
+    session_set_cookie_params($cookieParams["Lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
+
+    session_name($session_name);
+    session_start();
+    session_regenerate_id();
+
+}
 
 
 
 
 ?>>
 
-</html>
