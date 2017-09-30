@@ -1,6 +1,25 @@
 <?php
+<<<<<<< HEAD
 include_once 'connection.php';
 include("auth.php");
+=======
+//include_once 'connection.php';
+//include_once 'functions.php';
+session_start();
+
+$maxinactive = 10;
+
+// check to see if $_SESSION["timeout"] is set
+if (isset($_SESSION["timeout"])) {
+    $timeactive = time() - $_SESSION["timeout"];
+    if ($timeactive > $maxinactive) {
+        session_destroy();
+        header("Location: logout.php");
+    }
+}
+
+$_SESSION["timeout"] = time();
+>>>>>>> a909949456f4be6ceceb92f30573afc5840c347b
 ?>
 
 <!DOCTYPE html>
@@ -15,14 +34,8 @@ include("auth.php");
     <link rel="icon" href="../../favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
 
@@ -41,9 +54,8 @@ include("auth.php");
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="staff.php">Dashboard</a></li>
             <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
         </div>
@@ -69,7 +81,7 @@ include("auth.php");
               <span class="text-muted">Something else</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h3><a href="gating.php">Gated list</a></h3>
               <h4>Label</h4>
               <span class="text-muted">Something else</span>
             </div>
@@ -80,7 +92,7 @@ include("auth.php");
             </div>
           </div>
 
-          <h2 class="sub-header">Section title</h2>
+          <h2 class="sub-header">Student list</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -88,6 +100,7 @@ include("auth.php");
                   <th>SchoolID<th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -208,15 +221,10 @@ include("auth.php");
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="../../assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
