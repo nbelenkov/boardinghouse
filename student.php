@@ -1,6 +1,6 @@
 <?php
-include_once 'connection.php';
-include_once 'functions.php';
+//include_once 'connection.php';
+//include_once 'functions.php';
 session_start();
 ?>
 
@@ -42,11 +42,17 @@ session_start();
 
     <div class="container-fluid">
       <h1 class="page-header">Welcome, <?php echo $_SESSION['name']; ?></h1>
+    </div>
 
-
-
-
-
-
-
+    <div class="col-xs-6 col-sm-3 placeholder">
+      <h3><a href="weekend.php">HI</a></h3>
+      <span class="text-muted">Request permission to miss meals and </span>
+    </div>
+    <div class="col-xs-6 col-sm-3 placeholder">
+      <h3><a href="weekend.php">HI</a></h3>
+      <span class="text-muted">Request permission to miss meals and </span>
+    </div>
+    <div class="col-xs-6 col-sm-3 placeholder">
+      <h3><a href="weekend.php">HI</a></h3>
+      <span class="text-muted">Request permission to miss meals and </span>
     </div>

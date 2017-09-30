@@ -1,5 +1,5 @@
 <?php
-include_once "connection.php";
+#include_once "connection.php";
 include_once "functions.php";
 
 $email = $password = "";

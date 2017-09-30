@@ -1,6 +1,6 @@
 <?php
-include_once 'connection.php';
-include_once 'functions.php';
+//include_once 'connection.php';
+//include_once 'functions.php';
 session_start();
 
 $maxinactive = 10;
@@ -29,14 +29,8 @@ $_SESSION["timeout"] = time();
     <link rel="icon" href="../../favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
 
@@ -93,7 +87,7 @@ $_SESSION["timeout"] = time();
             </div>
           </div>
 
-          <h2 class="sub-header">Section title</h2>
+          <h2 class="sub-header">Student list</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -222,7 +216,6 @@ $_SESSION["timeout"] = time();
       </div>
     </div>
 
-    ================================================== -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/js/bootstrap.min.js"></script>
