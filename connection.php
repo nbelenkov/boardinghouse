@@ -2,10 +2,10 @@
 
 include_once 'config.php';
 
-$mysqli = mysqli_connect(HOST, USER, PASSWORD);
+$conn = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 
-if (!$mysqli) {
+if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
+//echo "Connected successfully";
 ?>
