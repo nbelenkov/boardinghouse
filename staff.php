@@ -101,17 +101,23 @@ $_SESSION["timeout"] = time();
               <th>Overseas</th>
               </tr>";
               while($row = mysqli_fetch_array($result)){
-                $user_id = $result["user_id"];  
+                $user_id = $row["user_id"];  
                 $sqlstmt = "SELECT event_id, In_Out FROM signlist WHERE user_id = '$user_id' ORDER BY event_id DESC LIMIT 1";
-                $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
-                                
+                $results = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+                $data = mysqli_fetch_array($results);
+                $in = $data["In_Out"];
+                if ($in == "Out"){
+                  $out = "bgcolor = 'red'";
+                }else{
+                  $out = "";
+                }                              
                 echo "<tr>";
-                echo "<td bgcolor=>" . $row['user_id'] . "</td>";
-                echo "<td>" . $row['Name'] . "</td>";
-                echo "<td>" . $row['Surname'] . "</td>";                
-                echo "<td>" . $row['Year'] . "</td>";
-                echo "<td>" . $row['Gated'] . "</td>";
-                echo "<td>" . $row['Overseas'] . "</td>";
+                echo "<td ' . $out . '>" . $user_id . "</td>";
+                echo "<td ' . $out . '>" . $row['Name'] . "</td>";
+                echo "<td ' . $out . '>" . $row['Surname'] . "</td>";                
+                echo "<td ' . $out . '>" . $row['Year'] . "</td>";
+                echo "<td ' . $out . '>" . $row['Gated'] . "</td>";
+                echo "<td ' . $out . '>" . $row['Overseas'] . "</td>";
                 echo "</tr>";
               }
               
