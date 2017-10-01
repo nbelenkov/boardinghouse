@@ -2,6 +2,15 @@
 include_once 'connection.php';
 include_once 'functions.php';
 include("auth.php");
+if (isset($_POST["destination"])){
+  $InorOut = $_REQUEST["InorOut"];
+  $destination = $_REQUEST["destination"];
+  $user_id = $_SESSION["user_id"];
+  $date = date("Y-m-d H:i:s");
+  $sqlstmt = "INSERT INTO signlist (user_id, In_Out, destination, dates) VALUES ('$user_id','$InorOut', '$destination', '$date')";
+  $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -43,16 +52,21 @@ include("auth.php");
     <div class="container-fluid">
       <h1 class="page-header">Welcome</h1>
     </div>
+    <div class="form-group">
+        <form action = "" class="form-horizontal" method="post">
+        <input type="radio" name="InorOut" value="Out" checked> Signing Out<br>
+        <input type="radio" name="InorOut" value="In"> Singing In<br>
+        <br>Where are you going to/returning from:<br>
+        <br>
+            <select name="destination">
+                <option value="Town">Town</option>
+                <option value="Gym">Gym</option>
+                <option value="Stahl">Stahl</option>
+                <option value="Talk">Talk</option>
+                <option value="Vols">Vols/Comps</option>
+            </select>
+            <button class="btn" type="submit">Submit</button>
+        </form>
 
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <h3><a href="inandout.php">Sign In and Out</a></h3>
-      <span class="text-muted">Sign out to leave the house and then Sign back in. </span>
-    </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <h3><a href="weekend.php">H</a></h3>
-      <span class="text-muted">Request permission to miss meals and </span>
-    </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <h3><a href="weekend.php">HI</a></h3>
-      <span class="text-muted">Request permission to miss meals and </span>
+
     </div>

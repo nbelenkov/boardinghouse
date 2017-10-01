@@ -6,13 +6,13 @@ if (isset($_POST["email"])){
   $email = mysqli_real_escape_string($conn,$email);    
   $password = stripslashes($_REQUEST['password']);
   $password = mysqli_real_escape_string($conn,$password);  
-  $sqlstmt = "SELECT password, username, staffcheck, email, Name FROM members WHERE email = '$email'";
+  $sqlstmt = "SELECT user_id, password, username, staffcheck, email FROM members WHERE email = '$email'";
   $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
   $data = mysqli_fetch_array($result);
   if ($data["email"] == $email){
       if ($data["password"] == md5($password)){
+          $_SESSION["user_id"] = $data["user_id"];        
           $_SESSION["username"] = $data["username"];
-          $_SESSION["name"] = $data["Name"];
           $_SESSION["staffcheck"] = $data["staffcheck"];
           if ($data["staffcheck"] == 1){
             header("Location: staff.php");
