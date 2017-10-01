@@ -1,25 +1,20 @@
 <?php
-<<<<<<< HEAD
 include_once 'connection.php';
 include("auth.php");
-=======
-//include_once 'connection.php';
-//include_once 'functions.php';
-session_start();
 
 $maxinactive = 10;
 
 // check to see if $_SESSION["timeout"] is set
-if (isset($_SESSION["timeout"])) {
-    $timeactive = time() - $_SESSION["timeout"];
-    if ($timeactive > $maxinactive) {
-        session_destroy();
-        header("Location: logout.php");
-    }
-}
-
+//if (isset($_SESSION["timeout"])) {
+ //   $timeactive = time() - $_SESSION["timeout"];
+//    if ($timeactive > $maxinactive) {
+ //       session_destroy();
+ //       header("Location: logout.php");
+ //   }
+//}
 $_SESSION["timeout"] = time();
->>>>>>> a909949456f4be6ceceb92f30573afc5840c347b
+
+
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +64,7 @@ $_SESSION["timeout"] = time();
           
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Welcome, <?php echo $_SESSION['name']; ?></h1>
+          <h1 class="page-header">Welcome, <?php echo $_SESSION['username']; ?></h1>
 
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
@@ -94,128 +89,34 @@ $_SESSION["timeout"] = time();
 
           <h2 class="sub-header">Student list</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>SchoolID<th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
-            </table>
+            <?php
+              $sqlstmt = "SELECT * FROM student";
+              $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+              echo "<table class = table table-striped>";
+              echo  "<tr>
+              <th>SchoolID<th>
+              <th>Name</th>
+              <th>Year</th>
+              <th>Gated</th>
+              <th>Overseas</th>
+              </tr>";
+              while($row = mysqli_fetch_array($result)){
+                $user_id = $result["user_id"];  
+                $sqlstmt = "SELECT event_id, In_Out FROM signlist WHERE user_id = '$user_id' ORDER BY event_id DESC LIMIT 1";
+                $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+                                
+                echo "<tr>";
+                echo "<td bgcolor=>" . $row['user_id'] . "</td>";
+                echo "<td>" . $row['Name'] . "</td>";
+                echo "<td>" . $row['Surname'] . "</td>";                
+                echo "<td>" . $row['Year'] . "</td>";
+                echo "<td>" . $row['Gated'] . "</td>";
+                echo "<td>" . $row['Overseas'] . "</td>";
+                echo "</tr>";
+              }
+              
+              echo "/<table>";
+            ?>
           </div>
         </div>
       </div>
