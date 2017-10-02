@@ -7,8 +7,23 @@ if (isset($_POST["destination"])){
   $destination = $_REQUEST["destination"];
   $user_id = $_SESSION["user_id"];
   $date = date("Y-m-d H:i:s");
-  $sqlstmt = "INSERT INTO signlist (user_id, In_Out, destination, dates) VALUES ('$user_id','$InorOut', '$destination', '$date')";
+  $dateD = date("Y-m-d");
+  $sqlstmt = "SELECT * FROM events WHERE Date = '$dateD' and Even_Type = 'Gated' and user_id = '$user_id'";
   $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+  if (mysqli_num_rows($result) == 0){
+    $sqlstmt = "SELECT event_id, In_Out FROM signlist WHERE user_id = '$user_id' ORDER BY event_id DESC LIMIT 1";
+    $results = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+    $data = mysqli_fetch_array($results);
+    $in = $data["In_Out"];
+    if ((($InorOut == "In") && ($in == "Out")) || (($InorOut == "Out") && ($in == "In")) || (($InorOut == "Out") && ($in == ""))){
+      $sqlstmt = "INSERT INTO signlist (user_id, In_Out, destination, dates) VALUES ('$user_id','$InorOut', '$destination', '$date')";
+      $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+    }else{
+      echo "Have you remebered to sing back in?";
+    }
+  }else{
+    echo "You are gated, you cant sign out";
+  }
 }
 
 ?>

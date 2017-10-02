@@ -60,8 +60,23 @@ $_SESSION["timeout"] = time();
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <h3>Events for Today</h3>
-          
+          <?php
+            $date = date("Y-m-d");    
+            echo "<h3>Events for " . $date ."</h3>";
+            $sqlstmt = "SELECT user_id, Even_Type, Start_Time, End_Time FROM events WHERE Date = '$date'";
+            $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+            echo "<table class = table table-striped>";
+            while($row = mysqli_fetch_array($result)){
+              //echo "<script type='text/javascript'>alert(". $row["Even_Type"] .")</script>";
+              echo "<tr>";
+              echo "<td>" . $row["user_id"] . "</td>";   
+              echo "<td>" . $row["Even_Type"] . "</td>";  
+              echo "<td>" . $row["Start_Time"] . "</td>";   
+              echo "<td>" . $row["End_Time"] . "</td>";          
+              echo "</tr>";
+            }
+            echo "</table>";
+          ?>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome, <?php echo $_SESSION['username']; ?></h1>
