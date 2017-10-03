@@ -10,10 +10,18 @@ if (isset($_POST["length"])){
     $reason = mysqli_real_escape_string($conn,$reason);
     $user_id = $_REQUEST["student"];
     $date = date("Y-m-d");
-    $sqlstmt = "INSERT INTO events (user_id, Date, Even_Type) VALUES ('$user_id','$date', 'Gated')";
+    $sqlstmt = "SELECT * FROM events WHERE Even_Type = 'Gated' and user_id = '$user_id' and Date = '$date'";
     $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
-    if ($length > 1){
-        
+    if (mysqli_num_rows($result) == 0){
+      if ($length > 1){
+        for ( $i = 0; $i <= ($length - 1); $i++){
+          $newdate =date('Y-m-d', strtotime($date. " + ". $i ." days"));;
+          $sqlstmt = "INSERT INTO events (user_id, Date, Even_Type) VALUES ('$user_id','$newdate', 'Gated')";
+          $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+        }
+      }
+    }else{
+      echo "This student is already gated";
     }
 }
 
@@ -43,7 +51,7 @@ if (isset($_POST["length"])){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Boarding House Administration</a>
+          <a class="navbar-brand" href="staff.php">Boarding House Administration</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">

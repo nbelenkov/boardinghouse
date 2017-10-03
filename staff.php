@@ -50,6 +50,7 @@ $_SESSION["timeout"] = time();
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="staff.php">Dashboard</a></li>
+            <li><a href="stats.php">Statistic</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
@@ -87,7 +88,7 @@ $_SESSION["timeout"] = time();
               <span class="text-muted">See, which students will be missing meals and send notification to missing students.</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <h3><a href="weekend.php">Weekend Absenties</a></h3>
+              <h3><a href="weekend.php">Weekend Absentees</a></h3>
               <span class="text-muted">Something else</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
@@ -112,7 +113,6 @@ $_SESSION["timeout"] = time();
               <th>SchoolID<th>
               <th>Name</th>
               <th>Year</th>
-              <th>Gated</th>
               <th>Overseas</th>
               </tr>";
               while($row = mysqli_fetch_array($result)){
@@ -131,7 +131,6 @@ $_SESSION["timeout"] = time();
                 echo "<td ' . $out . '>" . $row['Name'] . "</td>";
                 echo "<td ' . $out . '>" . $row['Surname'] . "</td>";                
                 echo "<td ' . $out . '>" . $row['Year'] . "</td>";
-                echo "<td ' . $out . '>" . $row['Gated'] . "</td>";
                 echo "<td ' . $out . '>" . $row['Overseas'] . "</td>";
                 echo "</tr>";
               }

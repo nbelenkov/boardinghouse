@@ -11,13 +11,16 @@ if (isset($_POST["destination"])){
   $sqlstmt = "SELECT * FROM events WHERE Date = '$dateD' and Even_Type = 'Gated' and user_id = '$user_id'";
   $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
   if (mysqli_num_rows($result) == 0){
-    $sqlstmt = "SELECT event_id, In_Out FROM signlist WHERE user_id = '$user_id' ORDER BY event_id DESC LIMIT 1";
+    $sqlstmt = "SELECT event_id, In_Out, destination FROM signlist WHERE user_id = '$user_id' ORDER BY event_id DESC LIMIT 1";
     $results = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
     $data = mysqli_fetch_array($results);
-    $in = $data["In_Out"];
-    if ((($InorOut == "In") && ($in == "Out")) || (($InorOut == "Out") && ($in == "In")) || (($InorOut == "Out") && ($in == ""))){
-      $sqlstmt = "INSERT INTO signlist (user_id, In_Out, destination, dates) VALUES ('$user_id','$InorOut', '$destination', '$date')";
-      $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+    if ((($InorOut == "In") && ($data["In_Out"] == "Out")) || (($InorOut == "Out") && ($data["In_Out"] == "In")) || (($InorOut == "Out") && ($data["In_Out"] == ""))){
+      if (($data["destination"] != $destination) && ($data["In_Out"] == "Out")){
+        echo "You singed out to go to a different place. Please check";
+      }else{
+        $sqlstmt = "INSERT INTO signlist (user_id, In_Out, destination, dates) VALUES ('$user_id','$InorOut', '$destination', '$date')";
+        $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+      }
     }else{
       echo "Have you remebered to sing back in?";
     }
@@ -52,7 +55,7 @@ if (isset($_POST["destination"])){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Boarding House Administration</a>
+          <a class="navbar-brand" href="student.php">Boarding House Administration</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -82,6 +85,13 @@ if (isset($_POST["destination"])){
             </select>
             <button class="btn" type="submit">Submit</button>
         </form>
+        <?php
+          $date = date()
+          if (
+        
+        
+        
+        ?>
 
 
     </div>
