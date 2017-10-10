@@ -2,6 +2,19 @@
 include_once 'connection.php';
 include_once 'functions.php';
 include("auth.php");
+
+$user_id = $_SESSION["user_id"];
+$sqlstmt = "SELECT Name, Surname, Year, Overseas FROM student WHERE user_id = '$user_id'";
+$result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+$data = mysqli_fetch_array($result);
+if ($data["Name"] != null){
+  $_SESSION ["Name"] = $data["Name"];
+  $_SESSION ["Surname"] = $data["Surname"];
+  $_SESSION ["Year"] = $data["Year"];
+  $_SESSION ["Overseas"] = $data["Overseas"];
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +54,7 @@ include("auth.php");
     </nav>
 
     <div class="container-fluid">
-      <h1 class="page-header">Welcome</h1>
+      <h1 class="page-header">Welcome <?php echo $_SESSION["Name"]; ?></h1>
     </div>
 
     <div class="col-xs-6 col-sm-3 placeholder">
@@ -49,10 +62,15 @@ include("auth.php");
       <span class="text-muted">Sign out to leave the house and then Sign back in. </span>
     </div>
     <div class="col-xs-6 col-sm-3 placeholder">
-      <h3><a href="weekend.php">H</a></h3>
-      <span class="text-muted">Request permission to miss meals and </span>
+      <h3><a href="weekend.php">Request Permission from Hsm</a></h3>
+      <span class="text-muted">Request permission to miss meals and leave the house</span>
     </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <h3><a href="weekend.php">HI</a></h3>
-      <span class="text-muted">Request permission to miss meals and </span>
-    </div>
+    <?php
+    if ($_SESSION["Overseas"] == "1"){
+      echo "
+      <div class='col-xs-6 col-sm-3 placeholder'>
+      <h3><a href='leaveout.php'>Complete Your Exeat Leave Out form</a></h3>
+      <span class='text-muted'>You can complete your exeat leave out form here</span>
+      </div>";
+    }
+    ?>

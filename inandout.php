@@ -68,7 +68,7 @@ if (isset($_POST["destination"])){
     </nav>
 
     <div class="container-fluid">
-      <h1 class="page-header">Welcome</h1>
+      <h1 class="page-header">Welcome <?php echo $_SESSION["Name"]; ?></h1>
     </div>
     <div class="form-group">
         <form action = "" class="form-horizontal" method="post">
@@ -83,15 +83,39 @@ if (isset($_POST["destination"])){
                 <option value="Talk">Talk</option>
                 <option value="Vols">Vols/Comps</option>
             </select>
-            <button class="btn" type="submit">Submit</button>
-        </form>
         <?php
-          $date = date()
-          if (
-        
-        
-        
+          $date = date("His");
+          $day = date("D");
+          if ($day != "Sun"){
+            if ($date > "164500" && $date < "190000"){
+              echo "<button class='btn' type='submit'>Submit</button>";
+            }
+            if (($_SESSION["Year"] > 5) && (($date > "210000") && ($date < "223000"))){
+              echo "<button class='btn' type='submit'>Submit</button>";
+            }else{
+              echo "Outside Sign Out times for your year group";
+            }
+          }elseif (($day == "Sun") && (($date > "070000") && ($date < "220000"))){
+            echo "<button class='btn' type='submit'>Submit</button>";
+          }else{
+            echo "Outside Sign Out times";
+          }
+        echo "<br>";
+        echo "<br>";
+        $sqlstmt = "SELECT event_id, In_Out, destination, dates FROM signlist WHERE user_id = " . $_SESSION["user_id"] . " ORDER BY";
+        $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+        echo "<table class = table table-striped>";
+        while($row = mysqli_fetch_array($result)){
+          //echo "<script type='text/javascript'>alert(". $row["Even_Type"] .")</script>";
+          echo "<tr>";
+          echo "<td>" . $row["event_id"] . "</td>";   
+          echo "<td>" . $row["In_Out"] . "</td>";  
+          echo "<td>" . $row["destination"] . "</td>";   
+          echo "<td>" . $row["dates"] . "</td>";          
+          echo "</tr>";
+        }
+        echo "</table>";
         ?>
-
+        </form>
 
     </div>
