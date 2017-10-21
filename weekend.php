@@ -2,6 +2,14 @@
 include_once 'connection.php';
 include_once 'functions.php';
 session_start();
+
+if (isset($_POST["submit"])){  
+  $sqlstmt = "INSERT INTO events (user_id, Date, Even_Type, Breakfast_Miss, Lunch_Miss, Supper_Miss, Overnight, Status) VALUES ('". $_SESSION['user_id'] ."', '". $_REQUEST['date'] ."', '". $_REQUEST['Even_Type'] ."', '". $_REQUEST["breakfast"] . "','". $_REQUEST['lunch'] ."','". $_REQUEST['supper'] ."', '". $_REQUEST['Overnight'] ."', 'Pending')";
+  $results = mysqli_query($conn, $sqlstmt) or die (mysqli_error($conn));
+  echo "<script type='text/javascript'>alert('Submitted Successfully')</script>";
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +36,7 @@ session_start();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Boarding House Administration</a>
+          <a class="navbar-brand" href="student.php">Boarding House Administration</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -41,8 +49,31 @@ session_start();
     </nav>
 
     <div class="container-fluid">
+      <h1 class="page-header">Welcome <?php echo $_SESSION["Name"]; ?></h1>
       <div class="row">
-        
+      <form action = "" class="form-horizontal" method="post">
+        <p>When do you need to leave?</p>
+        <input type="date" name="date">
+        <p>Are you leaving Overnight?</p>
+        <input type="radio" name="Overnight" value="Yes"> Yes<br>
+        <input type="radio" name="Overnight" value="No" checked> No<br>
+        <p>Why are you leaving?</p>
+        <br>
+            <select name="Even_Type">
+                <option value="Match">Match</option>
+                <option value="MealwithParents">Meal with Parents</option>
+                <option value="MissingMeal">Missing a meal for other reason</option>
+                <option value="Other">Other</option>
+            </select>
+        <p>What meals are you missing?</p>
+        <input type="hidden" name="breakfast" value="No"><br>
+        <input type="checkbox" name="breakfast" value="Yes"> Breakfast<br>
+        <input type="hidden" name="lunch" value="No"><br>
+        <input type="checkbox" name="lunch" value="Yes" checked> Lunch<br>
+        <input type="hidden" name="supper" value="No"><br>
+        <input type="checkbox" name="supper" value="Yes"> Supper<br>
+        <button class='btn' type='submit'>Submit</button>
+      </form>
 
       </div>
     </div>
