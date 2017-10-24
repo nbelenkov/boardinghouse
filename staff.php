@@ -4,6 +4,10 @@ include("auth.php");
 
 $maxinactive = 10;
 
+if ($_SESSION["staffcheck"] == 0){
+  header("location: student.php");
+}
+
 // check to see if $_SESSION["timeout"] is set
 //if (isset($_SESSION["timeout"])) {
  //   $timeactive = time() - $_SESSION["timeout"];
@@ -13,8 +17,6 @@ $maxinactive = 10;
  //   }
 //}
 $_SESSION["timeout"] = time();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +66,7 @@ $_SESSION["timeout"] = time();
           <?php
             $date = date("Y-m-d");    
             echo "<h3>Events for " . $date ."</h3>";
-            $sqlstmt = "SELECT user_id, Even_Type, Start_Time, End_Time FROM events WHERE Date = '$date'";
+            $sqlstmt = "SELECT user_id, Even_Type FROM events WHERE Date = '$date' and Status = 'Confirmed'";
             $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
             echo "<table class = table table-striped>";
             while($row = mysqli_fetch_array($result)){
@@ -81,7 +83,6 @@ $_SESSION["timeout"] = time();
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome, <?php echo $_SESSION['username']; ?></h1>
-
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
               <h3><a href="meals.php">Meal Registration</a></h3>
@@ -92,9 +93,8 @@ $_SESSION["timeout"] = time();
               <span class="text-muted">Something else</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <h3><a href="gating.php">Gated list</a></h3>
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
+              <h3><a href="gating.php">Gating</a></h3>
+              <span class="text-muted">Here you can gate students</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
@@ -102,7 +102,39 @@ $_SESSION["timeout"] = time();
               <span class="text-muted">Something else</span>
             </div>
           </div>
-
+          <div class="row">
+            <h2 class="sub-header">Permissions to </h2>
+           <?php
+            $sqlstmt = "SELECT event_id, user_id, Even_Type, Date, Breakfast_Miss, Lunch_Miss, Supper_Miss, Overnight FROM events WHERE Status = 'Pending'";
+            $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+            echo "<table class = table table-striped>";
+            echo  "<tr>
+            <th>SchoolID</th>
+            <th>Type of Event</th>
+            <th>Date</th>
+            <th>Missing Brefast?</th>
+            <th>Missing Lunch?</th>
+            <th>Missing Supper?</th>
+            <th>Overnight?</th>
+            </tr>";
+            while($row = mysqli_fetch_array($result)){
+              echo "<tr>";
+              echo "<td>" . $row["user_id"] . "</td>";   
+              echo "<td>" . $row["Even_Type"] . "</td>";  
+              echo "<td>" . $row["Date"] . "</td>";   
+              echo "<td>" . $row["Breakfast_Miss"] . "</td>";                
+              echo "<td>" . $row["Lunch_Miss"] . "</td>";
+              echo "<td>" . $row["Supper_Miss"] . "</td>";
+              echo "<td>" . $row["Overnight"] . "</td>";
+              echo "<td><a href=\"action.php?id=".$row['event_id']."&status=Accepted\">Approve</a></td>";
+              echo "<td><a href=\"action.php?id=".$row['event_id']."&status=Declined\">Decline</a></td>";
+              echo "<td><a href=\"action.php?id=".$row['event_id']."&status=seeDr.Q\">See Dr. Q</a></td>";
+              
+              echo "</tr>";
+            }
+            echo "</table>";
+           ?>
+          </div>
           <h2 class="sub-header">Student list</h2>
           <div class="table-responsive">
             <?php
@@ -110,10 +142,11 @@ $_SESSION["timeout"] = time();
               $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
               echo "<table class = table table-striped>";
               echo  "<tr>
-              <th>SchoolID<th>
+              <th>SchoolID</th>
               <th>Name</th>
+              <th>Surname</th>
               <th>Year</th>
-              <th>Overseas</th>
+              <th>Overseas</th>              
               </tr>";
               while($row = mysqli_fetch_array($result)){
                 $user_id = $row["user_id"];  
@@ -141,11 +174,5 @@ $_SESSION["timeout"] = time();
         </div>
       </div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

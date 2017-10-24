@@ -73,7 +73,23 @@ if (isset($_POST["submit"])){
         <input type="hidden" name="supper" value="No"><br>
         <input type="checkbox" name="supper" value="Yes"> Supper<br>
         <button class='btn' type='submit'>Submit</button>
-      </form>
+      </form> 
+      <hr>
+      <p> Already submitted requests and their status</p>
+      <?php
+        $sqlstmt = "SELECT Date, Even_Type, status FROM events WHERE user_id = " . $_SESSION["user_id"] . " ORDER BY event_id DESC ";
+        $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
+        echo "<table class = table table-striped>";
+        while($row = mysqli_fetch_array($result)){
+          //echo "<script type='text/javascript'>alert(". $row["Even_Type"] .")</script>";
+          echo "<tr>";
+          echo "<td>" . $row["Date"] . "</td>";   
+          echo "<td>" . $row["Even_Type"] . "</td>";  
+          echo "<td>" . $row["status"] . "</td>";       
+          echo "</tr>";
+        }
+        echo "</table>";
 
+      ?>
       </div>
     </div>

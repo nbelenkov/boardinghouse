@@ -16,7 +16,7 @@ if (isset($_POST["length"])){
       if ($length > 1){
         for ( $i = 0; $i <= ($length - 1); $i++){
           $newdate =date('Y-m-d', strtotime($date. " + ". $i ." days"));;
-          $sqlstmt = "INSERT INTO events (user_id, Date, Even_Type) VALUES ('$user_id','$newdate', 'Gated')";
+          $sqlstmt = "INSERT INTO events (user_id, Date, Even_Type, Status) VALUES ('$user_id','$newdate', 'Gated', 'Accepted')";
           $result = mysqli_query($conn, $sqlstmt) or die(mysqli_error($conn));
         }
       }
